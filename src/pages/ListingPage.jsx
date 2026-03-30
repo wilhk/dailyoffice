@@ -1,72 +1,56 @@
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { devotionalDays } from '../content'
-import { isDayComplete, markDayComplete } from '../storage'
-import { useState } from 'react'
+import { getProgress, getCompletedCount, resetProgress } from '../storage'
+import { useMemo, useState } from 'react'
 
-export default function DetailPage() {
-  const { dayId } = useParams()
+export default function ListingPage() {
   const navigate = useNavigate()
-  const day = devotionalDays.find((d) => String(d.day) === String(dayId))
-  const [completed, setCompleted] = useState(day ? isDayComplete(day.day) : false)
+  const [version, setVersion] = useState(0)
+  const progress = useMemo(() => getProgress(), [version])
+  const completed = getCompletedCount()
 
-  if (!day) {
-    return (
-      <div className="page">
-        <div className="container narrow">
-          <p>Day not found.</p>
-          <Link to="/" className="link-btn">Back to list</Link>
-        </div>
-      </div>
-    )
-  }
-
-  function handleFinish() {
-    markDayComplete(day.day)
-    setCompleted(true)
+  function handleReset() {
+    resetProgress()
+    setVersion(v => v + 1)
   }
 
   return (
     <div className="page">
-      <div className="container narrow">
-        <Link to="/" className="back-link">← Back</Link>
-        <article className="card">
-          <div className="eyebrow">Day {day.day}</div>
-          <h1>{day.title.replace(`Day ${day.day} — `, '')}</h1>
+      <div className="container">
+        <header className="header">
+          <div>
+            <h1>30-Day Daily Office during job searching</h1>
+            <p className="subtitle">A daily office for trust, identity, discernment, and perseverance.</p>
+          </div>
+          <div className="actions">
+            <div className="progress-pill">{completed}/{devotionalDays.length} completed</div>
+            <button className="secondary-btn" onClick={handleReset}>Reset Progress</button>
+          </div>
+        </header>
 
-          <section className="section">
-            <h2>Scripture</h2>
-            <p className="scripture-ref">{day.scripture}</p>
-            <p>{day.scriptureText}</p>
-          </section>
-
-          <section className="section">
-            <h2>Devotional</h2>
-            {day.devotional.split('\n\n').map((p, idx) => (
-              <p key={idx}>{p}</p>
-            ))}
-          </section>
-
-          <section className="section">
-            <h2>Questions</h2>
-            <ul>
-              {day.questions.map((q) => <li key={q}>{q}</li>)}
-            </ul>
-          </section>
-
-          <section className="section">
-            <h2>Reflection</h2>
-            <p>{day.reflection}</p>
-          </section>
-
-          <section className="section">
-            <h2>Prayer</h2>
-            <p>{day.prayer}</p>
-          </section>
-
-          <button className="primary-btn" onClick={handleFinish} disabled={completed}>
-            {completed ? 'Finished' : 'Mark as Finished'}
-          </button>
-        </article>
+        <div className="list">
+          {devotionalDays.map((day) => {
+            const complete = Boolean(progress[String(day.day)])
+            return (
+              <button
+                key={day.day}
+                className="list-item"
+                onClick={() => navigate(`/day/${day.day}`)}
+              >
+                <div className="list-main">
+                  <div className="day-num">Day {day.day}</div>
+                  <div>
+                    <div className="list-title">{day.title.replace(`Day ${day.day} — `, '')}</div>
+                    <div className="list-scripture">{day.scripture}</div>
+                  </div>
+                </div>
+                <div className={complete ? 'check complete' : 'check'} aria-label={complete ? 'completed' : 'not completed'}>
+                  {complete ? '✓' : ''}
+                </div>
+              </button>
+            )
+          })}
+        </div>
       </div>
     </div>
   )
