@@ -1,0 +1,1 @@
+export const devotionalDays = Array.from({length:30},(_,i)=>({day:i+1,title:'Theme '+(i+1),scripture:'Scripture reference',devotional:'Devotional content for day '+(i+1)}))
