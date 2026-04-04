@@ -1,4 +1,7 @@
+import { DEFAULT_BIBLE_SETTINGS, normalizeBibleSettings } from './scripture'
+
 const STORAGE_KEY = 'devotional-progress-v1'
+const SETTINGS_STORAGE_KEY = 'devotional-settings-v1'
 
 export function getProgress() {
   try {
@@ -27,4 +30,25 @@ export function resetProgress() {
 
 export function getCompletedCount() {
   return Object.keys(getProgress()).length
+}
+
+export function getBibleSettings() {
+  try {
+    const raw = localStorage.getItem(SETTINGS_STORAGE_KEY)
+    if (!raw) return { ...DEFAULT_BIBLE_SETTINGS }
+    const parsed = JSON.parse(raw)
+    return normalizeBibleSettings(parsed)
+  } catch {
+    return { ...DEFAULT_BIBLE_SETTINGS }
+  }
+}
+
+export function saveBibleSettings(nextSettings) {
+  const merged = normalizeBibleSettings({
+    ...getBibleSettings(),
+    ...nextSettings
+  })
+
+  localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(merged))
+  return merged
 }

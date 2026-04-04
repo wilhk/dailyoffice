@@ -1,11 +1,11 @@
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { devotionalDays } from '../content'
-import { isDayComplete, markDayComplete } from '../storage'
+import { getBibleSettings, isDayComplete, markDayComplete } from '../storage'
 import { useState } from 'react'
+import { getBibleProviderLabel, getBibleUrl, getFullScriptureText } from '../scripture'
 
 export default function DetailPage() {
   const { dayId } = useParams()
-  const navigate = useNavigate()
   const day = devotionalDays.find((d) => String(d.day) === String(dayId))
   const [completed, setCompleted] = useState(day ? isDayComplete(day.day) : false)
 
@@ -25,6 +25,14 @@ export default function DetailPage() {
     setCompleted(true)
   }
 
+  const fullScriptureText = getFullScriptureText(day)
+  const bibleSettings = getBibleSettings()
+  const preferredProviderLabel = getBibleProviderLabel(bibleSettings.provider)
+  const preferredBibleUrl = getBibleUrl(day.scripture, bibleSettings)
+  const alternateProvider = bibleSettings.provider === 'biblegateway' ? 'biblecom' : 'biblegateway'
+  const alternateProviderLabel = getBibleProviderLabel(alternateProvider)
+  const alternateBibleUrl = getBibleUrl(day.scripture, { ...bibleSettings, provider: alternateProvider })
+
   return (
     <div className="page">
       <div className="container narrow">
@@ -36,7 +44,20 @@ export default function DetailPage() {
           <section className="section">
             <h2>Scripture</h2>
             <p className="scripture-ref">{day.scripture}</p>
-            <p>{day.scriptureText}</p>
+            {fullScriptureText ? (
+              <p>{fullScriptureText}</p>
+            ) : (
+              <p className="muted-text">Full scripture text is not stored for this day yet.</p>
+            )}
+            <p className="muted-text">Preferred app: {preferredProviderLabel} ({bibleSettings.version})</p>
+            <div className="scripture-links">
+              <a href={preferredBibleUrl} target="_blank" rel="noreferrer">
+                Open in {preferredProviderLabel} ({bibleSettings.version})
+              </a>
+              <a href={alternateBibleUrl} target="_blank" rel="noreferrer">
+                Open in {alternateProviderLabel}
+              </a>
+            </div>
           </section>
 
           <section className="section">

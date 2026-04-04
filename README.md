@@ -7,6 +7,8 @@ A simple React + Vite devotional app with:
 - Detail page with scripture, devotional, questions, reflection, and prayer
 - localStorage-based progress tracking
 - devotional content stored separately in `src/content.js`
+- full scripture text populated via `scriptureFullText` for all 30 days
+- user Bible settings for provider/version with default `NIV`
 
 ## Run locally
 
@@ -51,5 +53,6 @@ Then build and deploy the `dist` folder.
 
 - `src/content.js` — devotional data
 - `src/storage.js` — local progress helpers
+- `src/scripture.js` — scripture full-text and Bible link helpers
 - `src/pages/ListingPage.jsx` — listing page
 - `src/pages/DetailPage.jsx` — detail page

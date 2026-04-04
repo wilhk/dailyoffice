@@ -93,6 +93,42 @@ a {
   gap: 12px;
 }
 
+.settings-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.settings-card h2 {
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(160px, 220px));
+  gap: 12px;
+}
+
+.setting-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: #334155;
+}
+
+.setting-field select {
+  border: 1px solid #cbd5e1;
+  background: white;
+  border-radius: 10px;
+  padding: 9px 10px;
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
 .list-item {
   width: 100%;
   background: white;
@@ -177,6 +213,24 @@ a {
   font-weight: 700;
 }
 
+.muted-text {
+  color: #64748b;
+}
+
+.scripture-links {
+  margin-top: 8px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.scripture-links a {
+  color: #0f172a;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 600;
+}
+
 li {
   margin-bottom: 8px;
 }
@@ -190,6 +244,10 @@ li {
     align-items: flex-start;
     flex-direction: column;
     gap: 8px;
+  }
+
+  .settings-grid {
+    grid-template-columns: 1fr;
   }
 
   .day-num {

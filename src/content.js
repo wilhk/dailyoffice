@@ -11,7 +11,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with waiting: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me waiting in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me waiting in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "I am still confident of this: I will see the goodness of Yahweh in the land of the living. Wait for Yahweh. Be strong, and let your heart take courage. Yes, wait for Yahweh."
   },
   {
     "day": 2,
@@ -25,7 +26,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with identity: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me identity in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me identity in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "For we are his workmanship, created in Christ Jesus for good works, which God prepared before that we would walk in them."
   },
   {
     "day": 3,
@@ -39,7 +41,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with faithfulness: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me faithfulness in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me faithfulness in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "Let us not be weary in doing good, for we will reap in due season, if we don’t give up."
   },
   {
     "day": 4,
@@ -53,7 +56,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with discernment: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me discernment in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me discernment in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "A man’s heart plans his course, but Yahweh directs his steps."
   },
   {
     "day": 5,
@@ -67,7 +71,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with resilience: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me resilience in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me resilience in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "Not only this, but we also rejoice in our sufferings, knowing that suffering produces perseverance; and perseverance, proven character; and proven character, hope:"
   },
   {
     "day": 6,
@@ -81,7 +86,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with provision: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me provision in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me provision in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "See the birds of the sky, that they don’t sow, neither do they reap, nor gather into barns. Your heavenly Father feeds them. Aren’t you of much more value than they?"
   },
   {
     "day": 7,
@@ -95,7 +101,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with renewal: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me renewal in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me renewal in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "But those who wait for Yahweh will renew their strength. They will mount up with wings like eagles. They will run, and not be weary. They will walk, and not faint."
   },
   {
     "day": 8,
@@ -109,7 +116,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with confidence: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me confidence in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me confidence in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "being confident of this very thing, that he who began a good work in you will complete it until the day of Jesus Christ."
   },
   {
     "day": 9,
@@ -123,7 +131,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with peace: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me peace in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me peace in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "In nothing be anxious, but in everything, by prayer and petition with thanksgiving, let your requests be made known to God. And the peace of God, which surpasses all understanding, will guard your hearts and your thoughts in Christ Jesus."
   },
   {
     "day": 10,
@@ -137,7 +146,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with wisdom: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me wisdom in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me wisdom in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "But if any of you lacks wisdom, let him ask of God, who gives to all liberally and without reproach; and it will be given to him."
   },
   {
     "day": 11,
@@ -151,7 +161,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with hope: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me hope in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me hope in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "Why are you in despair, my soul? Why are you disturbed within me? Hope in God! For I shall still praise him, the saving help of my countenance, and my God."
   },
   {
     "day": 12,
@@ -165,7 +176,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with courage: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me courage in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me courage in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "Haven’t I commanded you? Be strong and courageous. Don’t be afraid. Don’t be dismayed, for Yahweh your God is with you wherever you go.”"
   },
   {
     "day": 13,
@@ -179,7 +191,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with humility: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me humility in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me humility in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "He has shown you, O man, what is good. What does Yahweh require of you, but to act justly, to love mercy, and to walk humbly with your God?"
   },
   {
     "day": 14,
@@ -193,7 +206,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with patience: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me patience in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me patience in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "rejoicing in hope; enduring in troubles; continuing steadfastly in prayer;"
   },
   {
     "day": 15,
@@ -207,7 +221,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with perseverance: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me perseverance in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me perseverance in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "Therefore let us also, seeing we are surrounded by so great a cloud of witnesses, lay aside every weight and the sin which so easily entangles us, and let us run with perseverance the race that is set before us,"
   },
   {
     "day": 16,
@@ -221,7 +236,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with integrity: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me integrity in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me integrity in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "He who walks blamelessly walks surely, but he who perverts his ways will be found out."
   },
   {
     "day": 17,
@@ -235,7 +251,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with calling: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me calling in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me calling in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "And whatever you do, work heartily, as for the Lord, and not for men,"
   },
   {
     "day": 18,
@@ -249,7 +266,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with rest: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me rest in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me rest in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "“Come to me, all you who labor and are heavily burdened, and I will give you rest."
   },
   {
     "day": 19,
@@ -263,7 +281,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with perspective: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me perspective in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me perspective in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "We are pressed on every side, yet not crushed; perplexed, yet not to despair; pursued, yet not forsaken; struck down, yet not destroyed;"
   },
   {
     "day": 20,
@@ -277,7 +296,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with trust: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me trust in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me trust in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "Trust in Yahweh with all your heart, and don’t lean on your own understanding. In all your ways acknowledge him, and he will make your paths straight."
   },
   {
     "day": 21,
@@ -291,7 +311,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with guidance: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me guidance in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me guidance in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "I will instruct you and teach you in the way which you shall go. I will counsel you with my eye on you."
   },
   {
     "day": 22,
@@ -305,7 +326,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with open doors: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me open doors in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me open doors in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "“I know your works (behold, I have set before you an open door, which no one can shut), that you have a little power, and kept my word, and didn’t deny my name."
   },
   {
     "day": 23,
@@ -319,7 +341,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with contentment: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me contentment in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me contentment in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "Be free from the love of money, content with such things as you have, for he has said, “I will in no way leave you, neither will I in any way forsake you.”"
   },
   {
     "day": 24,
@@ -333,7 +356,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with steadiness: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me steadiness in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me steadiness in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "“Be still, and know that I am God. I will be exalted among the nations. I will be exalted in the earth.”"
   },
   {
     "day": 25,
@@ -347,7 +371,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with character: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me character in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me character in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "He who is faithful in a very little is faithful also in much. He who is dishonest in a very little is also dishonest in much."
   },
   {
     "day": 26,
@@ -361,7 +386,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with service: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me service in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me service in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "For the Son of Man also came not to be served, but to serve, and to give his life as a ransom for many.”"
   },
   {
     "day": 27,
@@ -375,7 +401,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with clarity: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me clarity in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me clarity in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "Your word is a lamp to my feet, and a light for my path."
   },
   {
     "day": 28,
@@ -389,7 +416,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with readiness: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me readiness in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me readiness in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "But sanctify the Lord God in your hearts; and always be ready to give an answer to everyone who asks you a reason concerning the hope that is in you, with humility and fear:"
   },
   {
     "day": 29,
@@ -403,7 +431,8 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with gratitude: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me gratitude in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me gratitude in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "In everything give thanks, for this is the will of God in Christ Jesus toward you."
   },
   {
     "day": 30,
@@ -417,6 +446,7 @@ export const devotionalDays = [
       "How can I respond in a way that reflects faith rather than anxiety?"
     ],
     "reflection": "Take one concrete step today that aligns with surrender: send the application, prepare carefully, follow up graciously, or rest without guilt if your heart is tired.",
-    "prayer": "Lord, teach me surrender in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen."
+    "prayer": "Lord, teach me surrender in this season. When I feel uncertain about my future, steady my heart. Help me walk with faith, wisdom, and peace today. Amen.",
+    "scriptureFullText": "We know that all things work together for good for those who love God, to those who are called according to his purpose."
   }
 ]
