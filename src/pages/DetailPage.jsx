@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import { devotionalDays } from '../content'
 import { getBibleSettings, isDayComplete, markDayComplete } from '../storage'
 import { useState } from 'react'
-import { getBibleProviderLabel, getBibleUrl, getFullScriptureText } from '../scripture'
+import { getBibleProviderLabel, getBibleUrl, getScriptureTextForVersion } from '../scripture'
 
 export default function DetailPage() {
   const { dayId } = useParams()
@@ -25,8 +25,8 @@ export default function DetailPage() {
     setCompleted(true)
   }
 
-  const fullScriptureText = getFullScriptureText(day)
   const bibleSettings = getBibleSettings()
+  const selectedScriptureText = getScriptureTextForVersion(day, bibleSettings.version)
   const preferredProviderLabel = getBibleProviderLabel(bibleSettings.provider)
   const preferredBibleUrl = getBibleUrl(day.scripture, bibleSettings)
   const alternateProvider = bibleSettings.provider === 'biblegateway' ? 'biblecom' : 'biblegateway'
@@ -44,10 +44,10 @@ export default function DetailPage() {
           <section className="section">
             <h2>Scripture</h2>
             <p className="scripture-ref">{day.scripture}</p>
-            {fullScriptureText ? (
-              <p>{fullScriptureText}</p>
+            {selectedScriptureText ? (
+              <p>{selectedScriptureText}</p>
             ) : (
-              <p className="muted-text">Full scripture text is not stored for this day yet.</p>
+              <p className="muted-text">Scripture text is unavailable for this version. Please use the open link below.</p>
             )}
             <p className="muted-text">Preferred app: {preferredProviderLabel} ({bibleSettings.version})</p>
             <div className="scripture-links">

@@ -9,6 +9,7 @@ A simple React + Vite devotional app with:
 - devotional content stored separately in `src/content.js`
 - full scripture text populated via `scriptureFullText` for all 30 days
 - user Bible settings for provider/version with default `NIV`
+- detail page scripture now switches dynamically by selected version (`NIV`, `ESV`, `NLT`, `NKJV`, `KJV`, `CUNP`, `CNV`, `CCB`)
 
 ## Run locally
 

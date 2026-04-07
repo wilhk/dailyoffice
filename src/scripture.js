@@ -7,7 +7,7 @@ export const BIBLE_PROVIDER_OPTIONS = [
   { value: PROVIDER_BIBLE_COM, label: 'Bible.com' }
 ]
 
-export const BIBLE_VERSION_OPTIONS = ['NIV', 'ESV', 'NLT', 'NKJV', 'KJV']
+export const BIBLE_VERSION_OPTIONS = ['NIV', 'ESV', 'NLT', 'NKJV', 'KJV', 'CUNP', 'CNV', 'CCB']
 
 export const DEFAULT_BIBLE_SETTINGS = {
   provider: PROVIDER_BIBLE_GATEWAY,
@@ -25,6 +25,15 @@ function encodeReference(reference) {
 function normalizeVersion(version) {
   const normalized = String(version ?? '').trim().toUpperCase()
   return BIBLE_VERSION_OPTIONS.includes(normalized) ? normalized : DEFAULT_BIBLE_SETTINGS.version
+}
+
+function toBibleGatewayVersionCode(version) {
+  const normalized = normalizeVersion(version)
+
+  if (normalized === 'CNV') return 'CNVT'
+  if (normalized === 'CCB') return 'CCBT'
+
+  return normalized
 }
 
 function normalizeProvider(provider) {
@@ -53,7 +62,7 @@ export function getFullScriptureText(day) {
 
 export function getBibleGatewayUrl(reference, version = 'NIV') {
   const encodedReference = encodeReference(reference)
-  const encodedVersion = encodeURIComponent(normalizeVersion(version))
+  const encodedVersion = encodeURIComponent(toBibleGatewayVersionCode(version))
   return `https://www.biblegateway.com/passage/?search=${encodedReference}&version=${encodedVersion}`
 }
 
@@ -61,6 +70,17 @@ export function getBibleComSearchUrl(reference, version = 'NIV') {
   const query = `${normalizeReference(reference)} ${normalizeVersion(version)}`.trim()
   const encodedReference = encodeURIComponent(query)
   return `https://www.bible.com/search/bible?q=${encodedReference}`
+}
+
+export function getScriptureTextForVersion(day, version) {
+  if (!day) return ''
+
+  const normalizedVersion = normalizeVersion(version)
+  const scriptureByVersion = day.scriptureByVersion ?? {}
+  const directMatch = String(scriptureByVersion[normalizedVersion] ?? '').trim()
+  if (directMatch) return directMatch
+
+  return getFullScriptureText(day)
 }
 
 export function getBibleProviderLabel(provider) {
