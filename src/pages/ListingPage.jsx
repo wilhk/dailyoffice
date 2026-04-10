@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { devotionalDays } from '../content'
 import { BIBLE_PROVIDER_OPTIONS, BIBLE_VERSION_OPTIONS } from '../scripture'
@@ -29,16 +29,92 @@ export default function ListingPage() {
   const [password, setPassword] = useState('')
   const [authBusy, setAuthBusy] = useState(false)
   const [authSuccessMessage, setAuthSuccessMessage] = useState('')
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isBibleSettingsOpen, setIsBibleSettingsOpen] = useState(false)
+  const cardGridRef = useRef(null)
+  const menuRef = useRef(null)
+
+  useEffect(() => {
+    const cardGrid = cardGridRef.current
+    if (!cardGrid) return
+
+    const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (reduceMotionQuery.matches) return
+
+    let frameId = 0
+    let ticking = false
+
+    const updateCards = () => {
+      ticking = false
+      const cards = cardGrid.querySelectorAll('.list-item')
+      const viewportCenter = window.innerHeight * 0.52
+      const viewportRange = window.innerHeight * 0.68
+
+      cards.forEach((card) => {
+        const rect = card.getBoundingClientRect()
+        const cardCenter = rect.top + rect.height / 2
+        const distance = (cardCenter - viewportCenter) / viewportRange
+        const clamped = Math.max(-1, Math.min(1, distance))
+        const depth = 1 - Math.min(1, Math.abs(clamped))
+
+        card.style.setProperty('--scroll-progress', clamped.toFixed(4))
+        card.style.setProperty('--scroll-depth', depth.toFixed(4))
+      })
+    }
+
+    const requestUpdate = () => {
+      if (ticking) return
+      ticking = true
+      frameId = window.requestAnimationFrame(updateCards)
+    }
+
+    requestUpdate()
+    window.addEventListener('scroll', requestUpdate, { passive: true })
+    window.addEventListener('resize', requestUpdate)
+
+    return () => {
+      if (frameId) window.cancelAnimationFrame(frameId)
+      window.removeEventListener('scroll', requestUpdate)
+      window.removeEventListener('resize', requestUpdate)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!isMenuOpen) return
+
+    function handlePointerDown(event) {
+      if (!menuRef.current) return
+      if (!menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false)
+      }
+    }
+
+    document.addEventListener('pointerdown', handlePointerDown)
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown)
+    }
+  }, [isMenuOpen])
 
   async function handleReset() {
     await resetProgress()
+    setIsMenuOpen(false)
   }
 
   async function handleSettingsChange(field, value) {
     await updateBibleSettings({ [field]: value })
   }
 
+  function openBibleSettingsDialog() {
+    setIsMenuOpen(false)
+    setIsBibleSettingsOpen(true)
+  }
+
+  function closeBibleSettingsDialog() {
+    setIsBibleSettingsOpen(false)
+  }
+
   function openAuthDialog() {
+    setIsMenuOpen(false)
     setAuthMode('signin')
     setAuthSuccessMessage('')
     setErrorMessage('')
@@ -85,6 +161,7 @@ export default function ListingPage() {
   }
 
   async function handleSignOut() {
+    setIsMenuOpen(false)
     setAuthSuccessMessage('')
     setErrorMessage('')
     await signOut()
@@ -92,7 +169,7 @@ export default function ListingPage() {
   }
 
   return (
-    <div className="page">
+    <div className="page page-listing">
       <div className="container">
         <header className="header">
           <div>
@@ -101,24 +178,46 @@ export default function ListingPage() {
           </div>
           <div className="actions">
             <div className="progress-pill">{completedCount}/{devotionalDays.length} completed</div>
-            <button className="secondary-btn" onClick={handleReset} disabled={dataLoading}>Reset Progress</button>
+            <div className="header-menu-wrap" ref={menuRef}>
+              <button
+                className="secondary-btn menu-toggle"
+                onClick={() => setIsMenuOpen((prev) => !prev)}
+                aria-expanded={isMenuOpen}
+                aria-haspopup="menu"
+              >
+                Menu
+              </button>
 
-            {authEnabled && authLoading && <span className="muted-text">Checking session...</span>}
+              {isMenuOpen && (
+                <div className="header-menu" role="menu" aria-label="Page menu">
+                  <button className="menu-item-btn" onClick={handleReset} disabled={dataLoading}>
+                    Reset Progress
+                  </button>
+                  <button className="menu-item-btn" onClick={openBibleSettingsDialog}>
+                    Bible Settings
+                  </button>
 
-            {authEnabled && !authLoading && !user && (
-              <button className="secondary-btn" onClick={openAuthDialog}>Log in</button>
-            )}
+                  <div className="menu-divider" />
 
-            {authEnabled && !authLoading && user && (
-              <div className="auth-inline-status">
-                <span className="muted-text">Signed in as {user.email}</span>
-                <button className="secondary-btn" onClick={handleSignOut}>Sign out</button>
-              </div>
-            )}
+                  {authEnabled && authLoading && <p className="menu-meta">Checking session...</p>}
 
-            {!authEnabled && (
-              <span className="muted-text">Cloud sync is disabled until Supabase env vars are set.</span>
-            )}
+                  {authEnabled && !authLoading && !user && (
+                    <button className="menu-item-btn" onClick={openAuthDialog}>Log in</button>
+                  )}
+
+                  {authEnabled && !authLoading && user && (
+                    <>
+                      <p className="menu-meta">Signed in as {user.email}</p>
+                      <button className="menu-item-btn" onClick={handleSignOut}>Sign out</button>
+                    </>
+                  )}
+
+                  {!authEnabled && (
+                    <p className="menu-meta">Cloud sync is disabled until Supabase env vars are set.</p>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </header>
 
@@ -129,57 +228,26 @@ export default function ListingPage() {
         {authSuccessMessage && <p className="success-text">{authSuccessMessage}</p>}
         {errorMessage && <p className="error-text">{errorMessage}</p>}
 
-        <section className="settings-card" aria-label="Bible settings">
-          <h2>Bible Settings</h2>
-          <div className="settings-grid">
-            <label className="setting-field">
-              <span>Provider</span>
-              <select
-                value={bibleSettings.provider}
-                onChange={(e) => handleSettingsChange('provider', e.target.value)}
-              >
-                {BIBLE_PROVIDER_OPTIONS.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-
-            <label className="setting-field">
-              <span>Version</span>
-              <select
-                value={bibleSettings.version}
-                onChange={(e) => handleSettingsChange('version', e.target.value)}
-              >
-                {BIBLE_VERSION_OPTIONS.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-        </section>
-
-        <div className="list">
-          {devotionalDays.map((day) => {
+        <div className="list" ref={cardGridRef}>
+          {devotionalDays.map((day, index) => {
             const complete = Boolean(progress[String(day.day)])
             return (
               <button
                 key={day.day}
                 className="list-item"
                 onClick={() => navigate(`/day/${day.day}`)}
+                style={{ '--card-index': index }}
               >
-                <div className="list-main">
+                <div className="list-item-head">
                   <div className="day-num">Day {day.day}</div>
-                  <div>
-                    <div className="list-title">{day.title.replace(`Day ${day.day} — `, '')}</div>
-                    <div className="list-scripture">{day.scripture}</div>
+                  <div className={complete ? 'check complete' : 'check'} aria-label={complete ? 'completed' : 'not completed'}>
+                    {complete ? '✓' : ''}
                   </div>
                 </div>
-                <div className={complete ? 'check complete' : 'check'} aria-label={complete ? 'completed' : 'not completed'}>
-                  {complete ? '✓' : ''}
+
+                <div className="list-main">
+                  <div className="list-title">{day.title.replace(`Day ${day.day} — `, '')}</div>
+                  <div className="list-scripture">{day.scripture}</div>
                 </div>
               </button>
             )
@@ -249,6 +317,53 @@ export default function ListingPage() {
 
             {authSuccessMessage && <p className="success-text">{authSuccessMessage}</p>}
             {errorMessage && <p className="error-text">{errorMessage}</p>}
+          </div>
+        </div>
+      )}
+
+      {isBibleSettingsOpen && (
+        <div className="modal-backdrop" onClick={closeBibleSettingsDialog}>
+          <div
+            className="modal-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="bible-settings-dialog-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="modal-header">
+              <h2 id="bible-settings-dialog-title">Bible Settings</h2>
+              <button className="icon-btn" onClick={closeBibleSettingsDialog} aria-label="Close">×</button>
+            </div>
+
+            <div className="settings-grid settings-grid-modal">
+              <label className="setting-field">
+                <span>Provider</span>
+                <select
+                  value={bibleSettings.provider}
+                  onChange={(e) => handleSettingsChange('provider', e.target.value)}
+                >
+                  {BIBLE_PROVIDER_OPTIONS.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label className="setting-field">
+                <span>Version</span>
+                <select
+                  value={bibleSettings.version}
+                  onChange={(e) => handleSettingsChange('version', e.target.value)}
+                >
+                  {BIBLE_VERSION_OPTIONS.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
           </div>
         </div>
       )}
