@@ -35,11 +35,22 @@ export function AppStateProvider({ children }) {
     }
   }, [authEnabled, user])
 
-  const persistState = useCallback(async (nextProgress, nextBibleSettings) => {
+  const persistProgress = useCallback(async (nextProgress) => {
+    if (authEnabled && user) {
+      await syncRemoteState(nextProgress, bibleSettings)
+      return
+    }
+
     saveProgress(nextProgress)
+  }, [authEnabled, user, bibleSettings, syncRemoteState])
+
+  const persistBibleSettings = useCallback(async (nextBibleSettings) => {
     setLocalBibleSettings(nextBibleSettings)
-    await syncRemoteState(nextProgress, nextBibleSettings)
-  }, [syncRemoteState])
+
+    if (authEnabled && user) {
+      await syncRemoteState(progress, nextBibleSettings)
+    }
+  }, [authEnabled, user, progress, syncRemoteState])
 
   useEffect(() => {
     if (!authEnabled) {
@@ -109,12 +120,11 @@ export function AppStateProvider({ children }) {
       }
 
       if (data) {
-        const remoteProgress = data.progress && typeof data.progress === 'object' ? data.progress : localProgress
+        const remoteProgress = data.progress && typeof data.progress === 'object' ? data.progress : {}
         const remoteSettings = normalizeBibleSettings(data.bible_settings ?? localSettings)
 
         setProgress(remoteProgress)
         setBibleSettings(remoteSettings)
-        saveProgress(remoteProgress)
         setLocalBibleSettings(remoteSettings)
       } else {
         setProgress(localProgress)
@@ -140,14 +150,14 @@ export function AppStateProvider({ children }) {
     }
 
     setProgress(nextProgress)
-    await persistState(nextProgress, bibleSettings)
-  }, [progress, bibleSettings, persistState])
+    await persistProgress(nextProgress)
+  }, [progress, persistProgress])
 
   const resetProgress = useCallback(async () => {
     const nextProgress = {}
     setProgress(nextProgress)
-    await persistState(nextProgress, bibleSettings)
-  }, [bibleSettings, persistState])
+    await persistProgress(nextProgress)
+  }, [persistProgress])
 
   const updateBibleSettings = useCallback(async (partialSettings) => {
     const nextSettings = normalizeBibleSettings({
@@ -156,8 +166,8 @@ export function AppStateProvider({ children }) {
     })
 
     setBibleSettings(nextSettings)
-    await persistState(progress, nextSettings)
-  }, [bibleSettings, progress, persistState])
+    await persistBibleSettings(nextSettings)
+  }, [bibleSettings, persistBibleSettings])
 
   const signUp = useCallback(async ({ email, password }) => {
     if (!authEnabled) {

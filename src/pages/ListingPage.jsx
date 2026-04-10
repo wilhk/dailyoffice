@@ -1,6 +1,6 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { devotionalDays } from '../content'
-import { useState } from 'react'
 import { BIBLE_PROVIDER_OPTIONS, BIBLE_VERSION_OPTIONS } from '../scripture'
 import { useAppState } from '../context/AppStateContext'
 
@@ -23,6 +23,7 @@ export default function ListingPage() {
     signOut
   } = useAppState()
 
+  const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false)
   const [authMode, setAuthMode] = useState('signin')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -35,6 +36,19 @@ export default function ListingPage() {
 
   async function handleSettingsChange(field, value) {
     await updateBibleSettings({ [field]: value })
+  }
+
+  function openAuthDialog() {
+    setAuthMode('signin')
+    setAuthSuccessMessage('')
+    setErrorMessage('')
+    setIsAuthDialogOpen(true)
+  }
+
+  function closeAuthDialog() {
+    if (authBusy) return
+    setIsAuthDialogOpen(false)
+    setPassword('')
   }
 
   async function handleAuthSubmit(event) {
@@ -54,12 +68,16 @@ export default function ListingPage() {
     if (authMode === 'signup') {
       ok = await signUp(payload)
       if (ok) {
-        setAuthSuccessMessage('Account created. If email confirmation is enabled, please confirm your email before signing in.')
+        setAuthMode('signin')
+        setPassword('')
+        setAuthSuccessMessage('Account created. Please sign in with your new account.')
       }
     } else {
       ok = await signIn(payload)
       if (ok) {
         setAuthSuccessMessage('Signed in successfully.')
+        setIsAuthDialogOpen(false)
+        setPassword('')
       }
     }
 
@@ -67,6 +85,8 @@ export default function ListingPage() {
   }
 
   async function handleSignOut() {
+    setAuthSuccessMessage('')
+    setErrorMessage('')
     await signOut()
     setAuthSuccessMessage('Signed out.')
   }
@@ -82,80 +102,32 @@ export default function ListingPage() {
           <div className="actions">
             <div className="progress-pill">{completedCount}/{devotionalDays.length} completed</div>
             <button className="secondary-btn" onClick={handleReset} disabled={dataLoading}>Reset Progress</button>
+
+            {authEnabled && authLoading && <span className="muted-text">Checking session...</span>}
+
+            {authEnabled && !authLoading && !user && (
+              <button className="secondary-btn" onClick={openAuthDialog}>Log in</button>
+            )}
+
+            {authEnabled && !authLoading && user && (
+              <div className="auth-inline-status">
+                <span className="muted-text">Signed in as {user.email}</span>
+                <button className="secondary-btn" onClick={handleSignOut}>Sign out</button>
+              </div>
+            )}
+
+            {!authEnabled && (
+              <span className="muted-text">Cloud sync is disabled until Supabase env vars are set.</span>
+            )}
           </div>
         </header>
 
-        <section className="settings-card" aria-label="Account settings">
-          <h2>Account</h2>
+        {authEnabled && user && dataLoading && (
+          <p className="muted-text state-loading">Loading your saved progress...</p>
+        )}
 
-          {!authEnabled && (
-            <p className="muted-text">Supabase is not configured yet. The app is running in local-only mode.</p>
-          )}
-
-          {authEnabled && authLoading && (
-            <p className="muted-text">Checking session...</p>
-          )}
-
-          {authEnabled && !authLoading && user && (
-            <div className="auth-status-row">
-              <p className="muted-text">Signed in as {user.email}</p>
-              <button className="secondary-btn" onClick={handleSignOut}>Sign out</button>
-            </div>
-          )}
-
-          {authEnabled && !authLoading && !user && (
-            <form className="auth-form" onSubmit={handleAuthSubmit}>
-              <div className="auth-mode-row">
-                <button
-                  type="button"
-                  className={authMode === 'signin' ? 'auth-mode-btn active' : 'auth-mode-btn'}
-                  onClick={() => setAuthMode('signin')}
-                >
-                  Sign in
-                </button>
-                <button
-                  type="button"
-                  className={authMode === 'signup' ? 'auth-mode-btn active' : 'auth-mode-btn'}
-                  onClick={() => setAuthMode('signup')}
-                >
-                  Sign up
-                </button>
-              </div>
-
-              <div className="settings-grid">
-                <label className="setting-field">
-                  <span>Email</span>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                    required
-                    autoComplete="email"
-                  />
-                </label>
-
-                <label className="setting-field">
-                  <span>Password</span>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                    required
-                    autoComplete={authMode === 'signup' ? 'new-password' : 'current-password'}
-                    minLength={6}
-                  />
-                </label>
-              </div>
-
-              <button className="primary-btn auth-submit" type="submit" disabled={authBusy}>
-                {authBusy ? 'Working...' : authMode === 'signup' ? 'Create account' : 'Sign in'}
-              </button>
-            </form>
-          )}
-
-          {authSuccessMessage && <p className="success-text">{authSuccessMessage}</p>}
-          {errorMessage && <p className="error-text">{errorMessage}</p>}
-        </section>
+        {authSuccessMessage && <p className="success-text">{authSuccessMessage}</p>}
+        {errorMessage && <p className="error-text">{errorMessage}</p>}
 
         <section className="settings-card" aria-label="Bible settings">
           <h2>Bible Settings</h2>
@@ -214,6 +186,72 @@ export default function ListingPage() {
           })}
         </div>
       </div>
+
+      {authEnabled && isAuthDialogOpen && (
+        <div className="modal-backdrop" onClick={closeAuthDialog}>
+          <div
+            className="modal-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="auth-dialog-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="modal-header">
+              <h2 id="auth-dialog-title">{authMode === 'signup' ? 'Create account' : 'Log in'}</h2>
+              <button className="icon-btn" onClick={closeAuthDialog} aria-label="Close">×</button>
+            </div>
+
+            <form className="auth-form" onSubmit={handleAuthSubmit}>
+              <div className="auth-mode-row">
+                <button
+                  type="button"
+                  className={authMode === 'signin' ? 'auth-mode-btn active' : 'auth-mode-btn'}
+                  onClick={() => setAuthMode('signin')}
+                >
+                  Log in
+                </button>
+                <button
+                  type="button"
+                  className={authMode === 'signup' ? 'auth-mode-btn active' : 'auth-mode-btn'}
+                  onClick={() => setAuthMode('signup')}
+                >
+                  Sign up
+                </button>
+              </div>
+
+              <label className="setting-field">
+                <span>Email</span>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  required
+                  autoComplete="email"
+                />
+              </label>
+
+              <label className="setting-field">
+                <span>Password</span>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  required
+                  autoComplete={authMode === 'signup' ? 'new-password' : 'current-password'}
+                  minLength={6}
+                />
+              </label>
+
+              <button className="primary-btn" type="submit" disabled={authBusy}>
+                {authBusy ? 'Working...' : authMode === 'signup' ? 'Create account' : 'Log in'}
+              </button>
+            </form>
+
+            {authSuccessMessage && <p className="success-text">{authSuccessMessage}</p>}
+            {errorMessage && <p className="error-text">{errorMessage}</p>}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
