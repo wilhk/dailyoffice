@@ -1,13 +1,12 @@
 import { Link, useParams } from 'react-router-dom'
 import { devotionalDays } from '../content'
-import { getBibleSettings, isDayComplete, markDayComplete } from '../storage'
-import { useState } from 'react'
 import { getBibleProviderLabel, getBibleUrl, getScriptureTextForVersion } from '../scripture'
+import { useAppState } from '../context/AppStateContext'
 
 export default function DetailPage() {
   const { dayId } = useParams()
   const day = devotionalDays.find((d) => String(d.day) === String(dayId))
-  const [completed, setCompleted] = useState(day ? isDayComplete(day.day) : false)
+  const { bibleSettings, progress, markDayComplete } = useAppState()
 
   if (!day) {
     return (
@@ -20,18 +19,17 @@ export default function DetailPage() {
     )
   }
 
-  function handleFinish() {
-    markDayComplete(day.day)
-    setCompleted(true)
-  }
-
-  const bibleSettings = getBibleSettings()
+  const completed = Boolean(progress[String(day.day)])
   const selectedScriptureText = getScriptureTextForVersion(day, bibleSettings.version)
   const preferredProviderLabel = getBibleProviderLabel(bibleSettings.provider)
   const preferredBibleUrl = getBibleUrl(day.scripture, bibleSettings)
   const alternateProvider = bibleSettings.provider === 'biblegateway' ? 'biblecom' : 'biblegateway'
   const alternateProviderLabel = getBibleProviderLabel(alternateProvider)
   const alternateBibleUrl = getBibleUrl(day.scripture, { ...bibleSettings, provider: alternateProvider })
+
+  async function handleFinish() {
+    await markDayComplete(day.day)
+  }
 
   return (
     <div className="page">

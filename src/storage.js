@@ -24,6 +24,10 @@ export function markDayComplete(day) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(progress))
 }
 
+export function saveProgress(progress) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(progress))
+}
+
 export function resetProgress() {
   localStorage.removeItem(STORAGE_KEY)
 }
@@ -51,4 +55,10 @@ export function saveBibleSettings(nextSettings) {
 
   localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(merged))
   return merged
+}
+
+export function setBibleSettings(settings) {
+  const normalized = normalizeBibleSettings(settings)
+  localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(normalized))
+  return normalized
 }
