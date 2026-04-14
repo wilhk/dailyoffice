@@ -41,37 +41,9 @@ VITE_SUPABASE_URL=https://<your-project-ref>.supabase.co
 VITE_SUPABASE_ANON_KEY=<your-anon-key>
 ```
 
-Run this SQL in Supabase SQL Editor:
-
-```sql
-create table if not exists public.user_app_state (
-  user_id uuid primary key references auth.users(id) on delete cascade,
-  progress jsonb not null default '{}'::jsonb,
-  bible_settings jsonb not null default '{"provider":"biblegateway","version":"NIV"}'::jsonb,
-  updated_at timestamptz not null default now()
-);
-
-alter table public.user_app_state enable row level security;
-
-create policy if not exists "Users can read their own state"
-  on public.user_app_state
-  for select
-  using (auth.uid() = user_id);
-
-create policy if not exists "Users can insert their own state"
-  on public.user_app_state
-  for insert
-  with check (auth.uid() = user_id);
-
-create policy if not exists "Users can update their own state"
-  on public.user_app_state
-  for update
-  using (auth.uid() = user_id)
-  with check (auth.uid() = user_id);
-```
-
-Or run the bundled script directly:
+Run these SQL scripts in Supabase SQL Editor:
 - `supabase/user_app_state.sql`
+- `supabase/user_feedback.sql`
 
 Auth setup in Supabase:
 - Enable Email provider (`Authentication -> Providers -> Email`)
@@ -97,3 +69,4 @@ For hosted auth on GitHub Pages:
 - `src/pages/DetailPage.jsx` — detail page
 - `.env.example` — required Supabase env variable names
 - `supabase/user_app_state.sql` — table + RLS policies for cloud sync
+- `supabase/user_feedback.sql` — table + RLS policies for feedback submission
