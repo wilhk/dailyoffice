@@ -2,6 +2,19 @@ import { DEFAULT_BIBLE_SETTINGS, normalizeBibleSettings } from './scripture'
 
 const STORAGE_KEY = 'devotional-progress-v1'
 const SETTINGS_STORAGE_KEY = 'devotional-settings-v1'
+const THEME_STORAGE_KEY = 'devotional-theme-v1'
+
+export function getActiveThemeId() {
+  try {
+    return localStorage.getItem(THEME_STORAGE_KEY) || 'job-seeking'
+  } catch {
+    return 'job-seeking'
+  }
+}
+
+export function saveActiveThemeId(themeId) {
+  localStorage.setItem(THEME_STORAGE_KEY, themeId)
+}
 
 export function getProgress() {
   try {

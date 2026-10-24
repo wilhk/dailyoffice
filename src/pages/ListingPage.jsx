@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { devotionalDays } from '../content'
-import { BIBLE_PROVIDER_OPTIONS, BIBLE_VERSION_OPTIONS } from '../scripture'
 import { useAppState } from '../context/AppStateContext'
+import BibleSettingsDialog from '../components/BibleSettingsDialog'
 
 export default function ListingPage() {
   const navigate = useNavigate()
@@ -13,15 +12,15 @@ export default function ListingPage() {
     errorMessage,
     setErrorMessage,
     user,
+    activeTheme,
     progress,
     completedCount,
-    bibleSettings,
     resetProgress,
-    updateBibleSettings,
     signUp,
     signIn,
     signOut
   } = useAppState()
+  const devotionalDays = activeTheme.days
 
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false)
   const [authMode, setAuthMode] = useState('signin')
@@ -100,10 +99,6 @@ export default function ListingPage() {
     setIsMenuOpen(false)
   }
 
-  async function handleSettingsChange(field, value) {
-    await updateBibleSettings({ [field]: value })
-  }
-
   function openBibleSettingsDialog() {
     setIsMenuOpen(false)
     setIsBibleSettingsOpen(true)
@@ -173,8 +168,8 @@ export default function ListingPage() {
       <div className="container">
         <header className="header">
           <div>
-            <h1>30-Day Daily Office during job searching</h1>
-            <p className="subtitle">A daily office for trust, identity, discernment, and perseverance.</p>
+            <h1>{devotionalDays.length}-Day Daily Office: {activeTheme.label}</h1>
+            <p className="subtitle">{activeTheme.subtitle}</p>
           </div>
           <div className="actions">
             <div className="progress-pill">{completedCount}/{devotionalDays.length} completed</div>
@@ -191,7 +186,7 @@ export default function ListingPage() {
               {isMenuOpen && (
                 <div className="header-menu" role="menu" aria-label="Page menu">
                   <button className="menu-item-btn" onClick={handleReset} disabled={dataLoading}>
-                    Reset Progress
+                    Reset {activeTheme.label} Progress
                   </button>
                   <button className="menu-item-btn" onClick={openBibleSettingsDialog}>
                     Bible Settings
@@ -321,52 +316,7 @@ export default function ListingPage() {
         </div>
       )}
 
-      {isBibleSettingsOpen && (
-        <div className="modal-backdrop" onClick={closeBibleSettingsDialog}>
-          <div
-            className="modal-card"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="bible-settings-dialog-title"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="modal-header">
-              <h2 id="bible-settings-dialog-title">Bible Settings</h2>
-              <button className="icon-btn" onClick={closeBibleSettingsDialog} aria-label="Close">×</button>
-            </div>
-
-            <div className="settings-grid settings-grid-modal">
-              <label className="setting-field">
-                <span>Provider</span>
-                <select
-                  value={bibleSettings.provider}
-                  onChange={(e) => handleSettingsChange('provider', e.target.value)}
-                >
-                  {BIBLE_PROVIDER_OPTIONS.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-
-              <label className="setting-field">
-                <span>Version</span>
-                <select
-                  value={bibleSettings.version}
-                  onChange={(e) => handleSettingsChange('version', e.target.value)}
-                >
-                  {BIBLE_VERSION_OPTIONS.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
-          </div>
-        </div>
-      )}
+      <BibleSettingsDialog isOpen={isBibleSettingsOpen} onClose={closeBibleSettingsDialog} />
     </div>
   )
 }

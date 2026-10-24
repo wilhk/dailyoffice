@@ -20,9 +20,61 @@ a {
 
 .page {
   min-height: 100vh;
-  padding: 24px;
+  padding: 24px 24px 124px;
   position: relative;
 }
+
+.theme-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 35;
+  padding: 12px 140px 12px 24px;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid #bae6fd;
+  background: rgba(248, 251, 255, 0.97);
+  backdrop-filter: blur(12px);
+}
+
+.theme-trigger {
+  display: grid;
+  gap: 4px;
+  border: 0;
+  background: transparent;
+  color: #0c4a6e;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 4px 0;
+  max-width: 100%;
+}
+
+.theme-caption { font-size: 0.72rem; color: #475569; }
+.theme-name { font-weight: 700; font-size: 0.92rem; }
+.theme-name span { margin-left: 8px; }
+.theme-dialog { max-height: 85dvh; overflow-y: auto; text-align: left; color: #1f2937; }
+.theme-dialog::backdrop { background: rgba(15, 23, 42, 0.48); }
+.theme-options { display: grid; gap: 12px; }
+.theme-option {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  background: #fff;
+  color: #334155;
+  text-align: left;
+  line-height: 1.5;
+  font: inherit;
+  cursor: pointer;
+}
+.theme-option.selected { border-color: #0284c7; background: #f0f9ff; }
+.theme-option:hover { background: #eff6ff; }
+.theme-option-heading { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.theme-option-heading span { color: #075985; font-size: 0.85rem; }
+.theme-trigger:focus-visible, .theme-option:focus-visible { outline: 3px solid #0284c7; outline-offset: 4px; }
 
 .page-listing {
   background:
@@ -561,6 +613,10 @@ a {
   border: 1px solid rgba(125, 211, 252, 0.85);
   border-radius: 999px;
   padding: 6px 10px;
+}
+
+.detail-settings-btn {
+  margin-top: 8px;
 }
 
 .detail-finish-btn {

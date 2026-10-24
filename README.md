@@ -1,12 +1,18 @@
-# 30-Day Job Search Devotional App
+# Daily Office Devotional App
 
 A React + Vite devotional app with:
-- Listing page with 30 days
+- Two themes: **Job Seeking** (30 days) and **Challenges at Work** (60 days)
+- A persistent footer shows the active theme; click it to choose a theme
+- Theme selection is remembered on this device; completion and reset are separate for each theme
 - Detail page with scripture, devotional, questions, reflection, and prayer
 - Dynamic scripture text by selected version (`NIV`, `ESV`, `NLT`, `NKJV`, `KJV`, `CUNP`, `CNV`, `CCB`)
 - Bible provider/version settings
 - Local progress tracking
 - Optional Supabase auth + cloud sync (sign up/sign in/sign out)
+
+The new workplace theme includes 60 original devotionals with verified, offline World English Bible readings, three questions, a reflection practice, and a prayer each day. WEB readings are labeled when a different preferred translation is selected; provider links open the preferred version. See [content sources](docs/workplace-devotional-sources.md) for all 60 passages.
+
+Existing Job Seeking progress is preserved. Both themes use the existing progress JSON for cloud sync, so no database migration is required.
 
 ## Run locally
 
@@ -20,6 +26,8 @@ npm run dev
 ```bash
 npm run build
 ```
+
+Run content and theme progress regression checks with `npm test`.
 
 ## Supabase setup (required for sign-in + cloud sync)
 

@@ -1,16 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { devotionalDays } from '../content'
 import { getBibleProviderLabel, getBibleUrl, getScriptureTextForVersion } from '../scripture'
 import { useAppState } from '../context/AppStateContext'
+import BibleSettingsDialog from '../components/BibleSettingsDialog'
 
 export default function DetailPage() {
   const navigate = useNavigate()
   const { dayId } = useParams()
-  const day = devotionalDays.find((d) => String(d.day) === String(dayId))
-  const { bibleSettings, progress, markDayComplete } = useAppState()
+  const { activeTheme, bibleSettings, progress, markDayComplete, dataLoading } = useAppState()
+  const day = activeTheme.days.find((d) => String(d.day) === String(dayId))
   const [isSavingFinish, setIsSavingFinish] = useState(false)
   const [isCelebratingFinish, setIsCelebratingFinish] = useState(false)
+  const [isBibleSettingsOpen, setIsBibleSettingsOpen] = useState(false)
   const redirectTimerRef = useRef(null)
 
   useEffect(() => {
@@ -56,10 +57,18 @@ export default function DetailPage() {
     }
   }
 
+  function openBibleSettingsDialog() {
+    setIsBibleSettingsOpen(true)
+  }
+
+  function closeBibleSettingsDialog() {
+    setIsBibleSettingsOpen(false)
+  }
+
   return (
     <div className="page page-detail">
       <div className="container narrow">
-        <Link to="/" className="back-link">← Back to 30 days</Link>
+        <Link to="/" className="back-link">← Back to {activeTheme.days.length} days</Link>
         <article className="card detail-card">
           <div className="detail-head-row">
             <div className="eyebrow">Day {day.day}</div>
@@ -73,11 +82,19 @@ export default function DetailPage() {
             <h2>Scripture</h2>
             <p className="scripture-ref">{day.scripture}</p>
             {selectedScriptureText ? (
-              <p>{selectedScriptureText}</p>
+              <>
+                <p>{selectedScriptureText}</p>
+                {day.scriptureTranslation && !day.scriptureByVersion?.[bibleSettings.version] && (
+                  <p className="muted-text">Reading shown in {day.scriptureTranslation}. Open {bibleSettings.version} using the link below.</p>
+                )}
+              </>
             ) : (
               <p className="muted-text">Scripture text is unavailable for this version. Please use the open link below.</p>
             )}
             <p className="muted-text">Preferred app: {preferredProviderLabel} ({bibleSettings.version})</p>
+            <button className="secondary-btn detail-settings-btn" onClick={openBibleSettingsDialog}>
+              Bible Settings
+            </button>
             <div className="scripture-links">
               <a href={preferredBibleUrl} target="_blank" rel="noreferrer">
                 Open in {preferredProviderLabel} ({bibleSettings.version})
@@ -115,7 +132,7 @@ export default function DetailPage() {
           <button
             className={isCelebratingFinish ? 'primary-btn detail-finish-btn celebrating' : 'primary-btn detail-finish-btn'}
             onClick={handleFinish}
-            disabled={completed || isSavingFinish || isCelebratingFinish}
+            disabled={dataLoading || completed || isSavingFinish || isCelebratingFinish}
           >
             {isCelebratingFinish ? 'Checked ✓' : isSavingFinish ? 'Saving...' : completed ? 'Finished' : 'Mark as Finished'}
           </button>
@@ -127,7 +144,7 @@ export default function DetailPage() {
           <div className="finish-overlay-panel">
             <span className="finish-check finish-check-overlay">✓</span>
             <p className="finish-overlay-title">Day marked as finished</p>
-            <p className="finish-overlay-subtitle">Returning to your 30-day list...</p>
+            <p className="finish-overlay-subtitle">Returning to your {activeTheme.days.length}-day list...</p>
             <div className="finish-dots" aria-hidden="true">
               <span />
               <span />
@@ -136,6 +153,8 @@ export default function DetailPage() {
           </div>
         </div>
       )}
+
+      <BibleSettingsDialog isOpen={isBibleSettingsOpen} onClose={closeBibleSettingsDialog} />
     </div>
   )
 }

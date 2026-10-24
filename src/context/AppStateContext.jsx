@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { getBibleSettings, getProgress, saveProgress, setBibleSettings as setLocalBibleSettings } from '../storage'
+import { getActiveThemeId, saveActiveThemeId, getBibleSettings, getProgress, saveProgress, setBibleSettings as setLocalBibleSettings } from '../storage'
+import { clearThemeProgress, getTheme, getThemeProgress, progressKey } from '../themes'
 import { normalizeBibleSettings } from '../scripture'
 import { isSupabaseConfigured, supabase } from '../lib/supabase'
 
@@ -15,6 +16,15 @@ export function AppStateProvider({ children }) {
   const [errorMessage, setErrorMessage] = useState('')
   const [progress, setProgress] = useState(() => getProgress())
   const [bibleSettings, setBibleSettings] = useState(() => getBibleSettings())
+  const [activeThemeId, setActiveThemeId] = useState(() => getTheme(getActiveThemeId()).id)
+  const activeTheme = getTheme(activeThemeId)
+  const themeProgress = useMemo(() => getThemeProgress(progress, activeTheme), [progress, activeTheme])
+
+  const changeTheme = useCallback((themeId) => {
+    const theme = getTheme(themeId)
+    saveActiveThemeId(theme.id)
+    setActiveThemeId(theme.id)
+  }, [])
 
   const authEnabled = isSupabaseConfigured
 
@@ -143,7 +153,8 @@ export function AppStateProvider({ children }) {
   }, [authEnabled, user, syncRemoteState])
 
   const markDayComplete = useCallback(async (day) => {
-    const key = String(day)
+    if (!activeTheme.days.some((entry) => entry.day === day)) return
+    const key = progressKey(activeTheme.id, day)
     const nextProgress = {
       ...progress,
       [key]: true
@@ -151,13 +162,13 @@ export function AppStateProvider({ children }) {
 
     setProgress(nextProgress)
     await persistProgress(nextProgress)
-  }, [progress, persistProgress])
+  }, [progress, persistProgress, activeTheme])
 
   const resetProgress = useCallback(async () => {
-    const nextProgress = {}
+    const nextProgress = clearThemeProgress(progress, activeTheme)
     setProgress(nextProgress)
     await persistProgress(nextProgress)
-  }, [persistProgress])
+  }, [persistProgress, progress, activeTheme])
 
   const updateBibleSettings = useCallback(async (partialSettings) => {
     const nextSettings = normalizeBibleSettings({
@@ -220,8 +231,10 @@ export function AppStateProvider({ children }) {
     setErrorMessage,
     session,
     user,
-    progress,
-    completedCount: Object.keys(progress).length,
+    activeTheme,
+    changeTheme,
+    progress: themeProgress,
+    completedCount: Object.keys(themeProgress).length,
     bibleSettings,
     markDayComplete,
     resetProgress,
@@ -237,6 +250,9 @@ export function AppStateProvider({ children }) {
     session,
     user,
     progress,
+    activeTheme,
+    changeTheme,
+    themeProgress,
     bibleSettings,
     markDayComplete,
     resetProgress,
